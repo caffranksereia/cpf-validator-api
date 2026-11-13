@@ -1,70 +1,59 @@
-def calculate_digits(register: str):
-    numbers = [int(digit) for digit in register[:9]]
+def calculate_digits(cpf: str) -> str:
+    digits = [int(digit) for digit in cpf[:9]]
 
     for _ in range(2):
-        result = 0
+        weighted_sum = 0
 
-        for index, digit in enumerate(numbers):
+        for index, digit in enumerate(digits):
+            weighted_sum += digit * (len(digits) + 1 - index)
 
-            result += digit * (len(numbers) + 1 - index)
+        check_digit = (weighted_sum * 10) % 11
+        check_digit = check_digit if check_digit <= 9 else 0
 
-        new_digit = (result * 10) % 11
-        new_digit = new_digit if new_digit <= 9 else 0
+        digits.append(check_digit)
+    calculated_cpf = "".join(map(str, digits))
 
-        numbers.append(new_digit)
-    register_calculated = "".join(map(str, numbers))
-
-    return register_calculated
-
-
-def clean_register(register: str):
-    new_register = register.replace(".", "").replace("-", "").strip()
-
-    return new_register
+    return calculated_cpf
 
 
-def has_all_equal_digits(register: str) -> bool:
-    for index in range(len(register) - 1):
-        current = int(register[index])
-        next_number = int(register[index + 1])
+def clean_cpf(cpf: str):
+    cleaned_cpf = cpf.replace(".", "").replace("-", "").strip()
 
-        if current != next_number:
+    return cleaned_cpf
+
+
+def has_valid_format(cpf: str) -> bool:
+    return len(cpf) == 11 and cpf.isdigit() and cpf.isascii()
+
+
+def has_all_equal_digits(cpf: str) -> bool:
+    for index in range(len(cpf) - 1):
+        current_digit = cpf[index]
+        next_digit = cpf[index + 1]
+
+        if current_digit != next_digit:
             return False
 
     return True
 
 
-def has_valid_format(register: str) -> bool:
-    for index in range(len(register) - 1):
-        current = int(register[index])
-        next_number = int(register[index + 1])
+def validate_cpf(cpf: str) -> bool:
+    cpf = clean_cpf(cpf)
 
-        print(current, next_number)
-
-
-def validate_cpf(register: str) -> bool:
-    register = clean_register(register)
-
-    if len(register) != 11 or not register.isdigit():
+    if not has_valid_format(cpf) or has_all_equal_digits(cpf):
         return False
 
-    if len(set(register)) == 1:
-        return False
-
-    return register == calculate_digits(register)
+    return cpf == calculate_digits(cpf)
 
 
-def main():
-    register = input("Which's your registered, please:")
+def main() -> None:
+    cpf = input("Which's your cpf, please:")
 
-    register = calculate_digits(register)
-
-    print(f"Register gerenation: {register}")
-
-    if validate_cpf(register):
-        print("register valid")
+    if validate_cpf(cpf):
+        print(f"CPF valid {cpf}")
     else:
-        print("register invalid")
+
+        print("Invalid CPF")
 
 
 if __name__ == "__main__":
