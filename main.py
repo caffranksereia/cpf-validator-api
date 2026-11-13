@@ -16,7 +16,7 @@ def calculate_digits(cpf: str) -> str:
     return calculated_cpf
 
 
-def clean_cpf(cpf: str):
+def clean_cpf(cpf: str) -> str:
     cleaned_cpf = cpf.replace(".", "").replace("-", "").strip()
 
     return cleaned_cpf
@@ -38,21 +38,20 @@ def has_all_equal_digits(cpf: str) -> bool:
 
 
 def validate_cpf(cpf: str) -> bool:
-    cpf = clean_cpf(cpf)
+    cleaned_cpf = clean_cpf(cpf)
 
-    if not has_valid_format(cpf) or has_all_equal_digits(cpf):
+    if not has_valid_format(cleaned_cpf) or has_all_equal_digits(cleaned_cpf):
         return False
 
-    return cpf == calculate_digits(cpf)
+    return cleaned_cpf == calculate_digits(cleaned_cpf)
 
 
 def main() -> None:
-    cpf = input("Which's your cpf, please:")
+    cpf = input("Enter your CPF: ")
 
     if validate_cpf(cpf):
-        print(f"CPF valid {cpf}")
+        print(f"Valid CPF: {cpf}")
     else:
-
         print("Invalid CPF")
 
 

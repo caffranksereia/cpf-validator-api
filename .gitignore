@@ -1,3 +1,4 @@
+
 # Environment
 .env
 .venv/
@@ -10,5 +11,10 @@ __pycache__/
 # Pytest
 .pytest_cache/
 
-# IDE
-.vscode/
+# Ruff
+.ruff_cache/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/

@@ -85,43 +85,15 @@ def test_has_all_equal_digits(cpf: str, expected: bool) -> None:
         ("000000006", "00000000604"),
     ],
 )
-def test_calculate_digits(cpf: str, expected: bool) -> None:
+def test_calculate_digits(cpf: str, expected: str) -> None:
     assert calculate_digits(cpf) == expected
 
 
 @pytest.mark.parametrize(
     "cpf, expected",
     [
-        ("52998224725", "CPF valid 52998224725"),
-        ("11111111111", "Invalid CPF"),
-    ],
-)
-def test_main_valid_cpf(monkeypatch, capsys, cpf: str, expected: str) -> None:
-
-    monkeypatch.setattr("builtins.input", lambda _: cpf)
-
-    main()
-
-    captured = capsys.readouterr()
-
-    assert captured.out.strip() == expected
-
-
-def test_main_invalid_cpf(monkeypatch, capsys) -> None:
-    monkeypatch.setattr("builtins.input", lambda _: "11111111111")
-
-    main()
-
-    captured = capsys.readouterr()
-
-    assert captured.out.strip() == "Invalid CPF"
-
-
-@pytest.mark.parametrize(
-    "cpf, expected",
-    [
-        ("52998224725", "CPF valid 52998224725"),
-        ("529.982.247-25", "CPF valid 529.982.247-25"),
+        ("52998224725", "Valid CPF: 52998224725"),
+        ("529.982.247-25", "Valid CPF: 529.982.247-25"),
         ("11111111111", "Invalid CPF"),
         ("1234567890A", "Invalid CPF"),
     ],
