@@ -1,11 +1,11 @@
 import pytest
 
-from main import (
+from main import main
+from src.cpf_validators.validator import (
     calculate_digits,
     clean_cpf,
     has_all_equal_digits,
     has_valid_format,
-    main,
     validate_cpf,
 )
 

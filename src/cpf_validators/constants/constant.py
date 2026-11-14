@@ -1,0 +1,11 @@
+# CPF format
+CPF_LENGTH = 11
+CPF_BASE_LENGTH = 9
+
+# Check digits
+CHECK_DIGITS_COUNT = 2
+
+# Calculation
+MIN_WEIGHT = 2
+MULTIPLIER = 10
+MODULUS = 11
